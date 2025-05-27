@@ -2,5 +2,6 @@ langchain
 langchain-ollama 
 langchain-openai
 langchain-community
-dotenv
+dotenv 
+pypdf
 streamlit
