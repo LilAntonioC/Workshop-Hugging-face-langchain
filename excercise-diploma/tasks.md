@@ -10,11 +10,11 @@ Create tools that evaluate the following expressions:
 
 - Compute the result of: `(10 / 2) + 4 * (1 + 1)`
 
-![alt text](image_math1.png)
+![alt text](images/image_math1.png)
 
 - Calculate the result of: `(8 + 2) * (5 - 3) / 2`
 
-![alt text](image_math2.png)
+![alt text](images/image_math2.png)
 
 > 💡 Each tool should receive the expression as a string input and return the result as a string.
 
@@ -25,7 +25,7 @@ Create a tool that answers the following:
 
 - How many days have passed from `January 1, 1995` to **today**?
 
-![alt text](image_dayspassed.png)
+![alt text](images/image_dayspassed.png)
 
 > 💡 The tool should accept a date in `YYYY-MM-DD` format and return the number of days between that date and today.
 
@@ -41,7 +41,7 @@ Build a tool for converting temperatures:
 (F - 32) * 5 / 9
 ````
 
-![alt text](image_tempconversion.png)
+![alt text](images/image_tempconversion.png)
 
 ---
 
@@ -65,15 +65,15 @@ Use the **quadratic formula**:
 >
 > * Two real roots
 
-![alt text](image_tworealroots.png)
+![alt text](images/image_tworealroots.png)
 
 > * One real root
 
-![alt text](image_onerealroot.png)
+![alt text](images/image_onerealroot.png)
 
 > * No real roots (discriminant < 0)
 
-![alt text](image_noroots.png)
+![alt text](images/image_noroots.png)
 
 ---
 
