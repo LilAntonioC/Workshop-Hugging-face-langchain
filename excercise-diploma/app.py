@@ -1,11 +1,15 @@
-import os
-import streamlit as st
-from dotenv import load_dotenv
 
-from langchain import hub
-from langchain.agents import Tool, create_tool_calling_agent, AgentExecutor
-from langchain_openai import ChatOpenAI
+import streamlit as st
+import os
+from dotenv import load_dotenv
+from pydantic import BaseModel, Field
+from langchain.agents import Tool, tool
 from langchain_ollama import ChatOllama
+from langchain_openai import ChatOpenAI
+from langchain import hub
+from langchain.agents import create_tool_calling_agent
+from langchain.agents import AgentExecutor
+from datetime import date, datetime
 
 load_dotenv()
 
@@ -13,36 +17,84 @@ load_dotenv()
 # ╔════════════════════════════════════════════════════════════════════╗
 # ║ 🚧✏️ MODIFY ONLY THIS SECTION BELOW — DO NOT TOUCH ANYTHING ELSE ✏️🚧 ║
 # ╚════════════════════════════════════════════════════════════════════╝
+def solve_operations(input: str):
+    return str(eval(input))
 
+def date_differences(inputdate : str) : 
+    
+    d1 = datetime.strptime(inputdate, r"%Y-%m-%d").date()
+    d2 = date.today()
+    return str( abs((d2 - d1).days) )
 
-# --- Define a simple tool ---
-def SquareNumbers(input: str) -> str:
+def temperature_conversion(temp : str) : 
+    return str(( float(temp) - 32 )  * 5 / 9 )
+
+def quadratic_equation(input: str):
+    parts = input.strip().split(",")
+    
+    if len(parts) != 3:
+        return "ERROR: You must input exactly 3 comma-separated numbers like '1,2,-3'\n"
+    
     try:
-        number = float(input)
-        return number**2
+        a, b, c = map(float, parts)
     except ValueError:
-        return "Please enter a valid number."
+        return "ERROR: All inputs must be numeric. Use format like '1,2,-3'\n"
 
+    if a == 0:
+        return "ERROR: 'a' must not be 0 in a quadratic equation\n"
+
+    disc = b**2 - 4*a*c
+    if disc < 0:
+        return "No real roots\n"
+    if disc == 0:
+        return f"The solution is {-b / ( 2 * a )}\n"
+    sqrt_disc = disc**0.5
+    r1 = (-b + sqrt_disc) / (2*a)
+    r2 = (-b - sqrt_disc) / (2*a)
+    return f"First solution is {r1} and the second solution is {r2}\n"
+
+    
+    
 
 tools = [
-    Tool(
-        name="SquareCalculator",
-        func=SquareNumbers,
-        description="Use this tool to calculate the square of a number. Input should be a number.",
-    )
-]
+Tool(
+    name="TemperatureConversion",
+    func=temperature_conversion,
+    description="Convert farenheit degrees into Celsius . JUST Input a decimal value like '113.5'."
+),
+Tool(
+    name="Calculator",
+    func=solve_operations,
+    description="Evaluates simple math expressions like '10 / 8 + 4 * (2 + 1)'."
+),
+Tool(
+    name="DateDifference",
+    func=date_differences,
+    description="Get how many days have passed since a date. You have to format the given date into YYYY-MM-DD"
+),
 
+Tool(
+    name="QuadraticSolver",
+    func=quadratic_equation,
+    description="""
+    Solves a quadriatic equation in the form ax^2 + bx + c where a,b,c are the quofficients
+    
+    INPUT : a STRING of 3 (THREE, the THIRD number) comma separated values in the form a,b,c EG. 10,2,-3
+    If a quofficient is missing use 0 for that quofficient. If there is no quofficient and just the term, use 0
+    EXAMPLES : 10x^2 + 9x - 3 becomes 10,9,-3
+    EXAMPLES : 5x^2- 2 becomes 5, 0, -2 because there is no b
+    EXAMPLES : x^2 becomes 1, 0, 0 Because there is no b or c
+    
+    """
+),
+
+]
 
 # ╔════════════════════════════════════════════════════════════════════╗
 # ║ 🤖 MODEL SETUP — Choose ONE of the options below to initialize the LLM ║
 # ╚════════════════════════════════════════════════════════════════════╝
 
-# 👉 Option 1: Use OpenAI (recommended if you have API access)
-llm = ChatOpenAI(model="gpt-4.1-nano", temperature=0)
-
-# 👉 Option 2: Use Ollama (for local models like LLaMA3)
-# Uncomment the line below and comment out the OpenAI line above if you're using Ollama:
-# llm = ChatOllama(temperature=0, model="llama3.1")
+llm = ChatOllama(model="llama3.2")
 
 
 # ╔════════════════════════════════════════════════════════════════════╗
