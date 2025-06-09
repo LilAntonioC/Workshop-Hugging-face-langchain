@@ -1,3 +1,4 @@
+# Workshop-Hugging-face-langchain
 
 # 🧠 Homework: Building Custom Tools with LangChain Agents
 
@@ -9,7 +10,12 @@ In this assignment, you'll define and implement custom tools that can be used by
 Create tools that evaluate the following expressions:
 
 - Compute the result of: `(10 / 2) + 4 * (1 + 1)`
+
+![alt text](excercise-diploma/images/image_math1.png)
+
 - Calculate the result of: `(8 + 2) * (5 - 3) / 2`
+
+![alt text](excercise-diploma/images/image_math2.png)
 
 > 💡 Each tool should receive the expression as a string input and return the result as a string.
 
@@ -19,6 +25,8 @@ Create tools that evaluate the following expressions:
 Create a tool that answers the following:
 
 - How many days have passed from `January 1, 1995` to **today**?
+
+![alt text](excercise-diploma/images/image_dayspassed.png)
 
 > 💡 The tool should accept a date in `YYYY-MM-DD` format and return the number of days between that date and today.
 
@@ -33,6 +41,8 @@ Build a tool for converting temperatures:
 ```text
 (F - 32) * 5 / 9
 ````
+
+![alt text](excercise-diploma/images/image_tempconversion.png)
 
 ---
 
@@ -55,8 +65,16 @@ Use the **quadratic formula**:
 > 💡 Handle cases where there are:
 >
 > * Two real roots
+
+![alt text](excercise-diploma/images/image_tworealroots.png)
+
 > * One real root
+
+![alt text](excercise-diploma/images/image_onerealroot.png)
+
 > * No real roots (discriminant < 0)
+
+![alt text](excercise-diploma/images/image_noroots.png)
 
 ---
 
